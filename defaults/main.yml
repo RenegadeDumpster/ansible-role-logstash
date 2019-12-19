@@ -19,3 +19,6 @@ logstash_enabled_on_boot: true
 
 logstash_install_plugins:
   - logstash-input-beats
+
+logstash_config_template: logstash.yml.j2
+logstash_config_file_path: /etc/logstash/logstash.yml

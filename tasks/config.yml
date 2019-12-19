@@ -11,6 +11,15 @@
     - 30-elasticsearch-output.conf
   notify: restart logstash
 
+- name: Copy logstash configuration.
+  template:
+    src: "{{ logstash_config_template }}"
+    dest: "{{ logstash_config_file_path }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart logstash
+
 - name: Create Logstash filters.
   copy:
     src: "filters/{{ item }}"
@@ -22,8 +31,6 @@
     - 10-syslog.conf
     - 11-nginx.conf
     - 12-apache.conf
-    - 14-solr.conf
-    - 15-drupal.conf
   notify: restart logstash
 
 - name: Create Logstash configuration file for local syslog.
@@ -42,3 +49,4 @@
     state: absent
   when: not logstash_monitor_local_syslog
   notify: restart logstash
+
